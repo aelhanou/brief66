@@ -71,7 +71,7 @@ export const Reservation = () => {
           backgroundSize: "cover",
         }}
       >
-        <LocalizationProvider className="md:mt-20" dateAdapter={AdapterDateFns}>
+        <LocalizationProvider className="md:mt-20"  dateAdapter={AdapterDateFns}>
           <StaticDateRangePicker  
             displayStaticWrapperAs={"desktop"}
             value={value}
