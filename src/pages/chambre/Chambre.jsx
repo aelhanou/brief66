@@ -14,6 +14,8 @@ export const Chambre = () => {
   const [allChambres, setAllChambres] = useState([]);
   // const memoizedValue = useMemo()
   const dispatch = useDispatch();
+  let winner = "images/badgewinner.png";
+
 
   let images = [
     "/images/room1.jpg",
@@ -32,6 +34,8 @@ export const Chambre = () => {
     "Avec une une splendide vue sur la piscine, les Jardins légendaires et les montagnes de l’Atlas, les chambres Deluxe Agdal - D'une superficie de 30 à 45 m2 combinent confort et raffinement. Elles disposent d'un grand lit, d'une salle de bain avec douche séparée.Un cocktail à l'arrivée, des délices locaux ainsi que le wifi sont offerts pour magnifier l'expérience.                    ",
   ];
 
+  // let coverture_II= "images/background/BackG3.jpg";
+
   // const [chambre, setChambre] = useState({})
 
   useEffect(() => {
@@ -44,12 +48,12 @@ export const Chambre = () => {
 
   useEffect(async () => {
     dispatch(getReservationData());
-  }, []);                                                                           
+  }, []);
 
   useEffect(() => {
     setAllChambres(state.allChambares);
     console.log(allChambres);
-  }, [state]);                                                                                          
+  }, [state]);
 
   const reservations = (e) => {
     if (e.length > 0) {
@@ -89,6 +93,84 @@ export const Chambre = () => {
     dispatch(getAllChambres());
   }, []);
 
+  const css = `
+  .chevron {
+    position: absolute;
+    width: 28px;
+    height: 8px;
+    opacity: 0;
+    transform: scale3d(0.5, 0.5, 0.5);
+    animation: move 3s ease-out infinite;
+  }
+
+  .chevron:first-child {
+    animation: move 3s ease-out 1s infinite;
+  }
+  
+  .chevron:nth-child(2) {
+    animation: move 3s ease-out 2s infinite;
+  }
+  
+  .chevron:before,
+  .chevron:after {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 51%;
+    background: #fff;
+  }
+  
+  .chevron:before {
+    left: 0;
+    transform: skew(0deg, 30deg);
+  }
+  
+  .chevron:after {
+    right: 0;
+    width: 50%;
+    transform: skew(0deg, -30deg);
+  }
+  
+  @keyframes move {
+    25% {
+      opacity: 1;
+  
+    }
+    33% {
+      opacity: 1;
+      transform: translateY(30px);
+    }
+    67% {
+      opacity: 1;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
+    }
+  }
+  
+  .text {
+    display: block;
+    margin-top: 75px;
+    margin-left: -30px;
+    font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+    font-size: 12px;
+    color: #fff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: .25;
+    animation: pulse 2s linear alternate infinite;
+  }
+  
+  @keyframes pulse {
+    to {
+      opacity: 1;
+    }
+  }
+`
+
   // useEffect(()=>{
   //     console.log(stateRev.reservation);
   // },[stateRev])
@@ -99,6 +181,29 @@ export const Chambre = () => {
 
   return (
     <div className="bg-black text-white">
+      <div className="top-0 left-20 w-[130px] fixed">
+        <img src={winner} alt="" />
+      </div>
+      <div className="w-full"
+        style={{
+          backgroundImage: `url("/images/background/BackG3.jpg")`,
+          backgroundSize: "cover",
+          height: "100vh",
+        }}
+      >
+        <h2 className="flex text-6xl pb-20 justify-center items-center h-screen"> Réserve Your Room</h2>
+        <div>
+          <div className="container absolute left-[50%] bottom-[10%] z-50 w-7 h-7">
+            <div className="chevron"></div>
+            <div className="chevron"></div>
+            <div className="chevron"></div>
+            <span className="text">Scroll down</span>
+            <style>
+              {css}
+            </style>
+          </div>
+        </div>
+      </div>
       <div className="flex w-full">
         <div className="w-[76%]">
           {state?.allChambares.map((e, i) => (
@@ -114,7 +219,7 @@ export const Chambre = () => {
           ))}
         </div>
         {state?.allChambares.length > 0 && (
-          <div className="flex flex-col gap-8  mt-10 rounded-xl w-[22%] p-4 h-[280px] border-2">
+          <div className="flex flex-col gap-8 fixed right-[60px] top-[50px] bg-white text-black  mt-10 rounded-sm  w-[19%] p-4 h-[480px] backdrop-blur-sm">
             <div>Votre séjour</div>
             <div className="flex justify-between ">
               <div className="flex flex-col">
@@ -127,8 +232,7 @@ export const Chambre = () => {
               </div>
             </div>
             <div>
-              {" "}
-              {adulte && adulte} adulte And {enfant && enfant} enfant{" "}
+              {adulte && adulte} adulte And {enfant && enfant} enfant
             </div>
             <div>Total : 0,00 MAD</div>
           </div>
