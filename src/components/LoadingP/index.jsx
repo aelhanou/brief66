@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PropagateLoader } from 'react-spinners';
+import PropTypes from 'prop-types';
 
 
 export const Loading = ({children}) => {
@@ -29,4 +30,8 @@ export const Loading = ({children}) => {
     );
 }
 
+
+Loading.propTypes ={
+    children : PropTypes.any
+}
 

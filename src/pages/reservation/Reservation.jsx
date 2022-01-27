@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, {   useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // import { getAllChambres,addChambre } from './ChambreSlice'
@@ -25,7 +25,7 @@ export const Reservation = () => {
   // const [value, setValue] = React.useState([null, null]);
   let logolabel = "images/logo/logo-white.svg";
   let fleche = "images/CURVED_ARROW.png";
-  let winner = "images/badgewinner.png";
+  // let winner = "images/badgewinner.png";
 
 
   // useEffect(() => {
@@ -42,8 +42,8 @@ export const Reservation = () => {
   // }, [value]);
 
   const getData = () => {
-    let debit = new Intl.DateTimeFormat("en-GB").format(debitDate);
-    let fin = new Intl.DateTimeFormat("en-GB").format(finDate);
+    let debit = new Intl.DateTimeFormat("en-GB").format("");
+    let fin = new Intl.DateTimeFormat("en-GB").format("");
     const reservation = {
       debit,
       fin,
@@ -73,6 +73,7 @@ export const Reservation = () => {
   return (
     
     <Loading>
+
       <div
         className="h-[100vh] w-full lg:items-top md:flex sm:flex-wrap sm:items-top md:flex-wrap md:h-screen md:items-top overflow-y-hidden  md:m-auto flex-col  h-screen flex gap-14 shadow-2xl justify-center bg-cover bg-center bg-no-repeat "
         style={{
@@ -80,7 +81,7 @@ export const Reservation = () => {
           backgroundSize: "cover",
         }}
       >
-        <LocalizationProvider className="md:mt-20"  dateAdapter={AdapterDateFns}>
+        {/* <LocalizationProvider className="md:mt-20"  dateAdapter={AdapterDateFns}>
           <StaticDateRangePicker  
             displayStaticWrapperAs={"desktop"}
             value={value}
@@ -96,7 +97,7 @@ export const Reservation = () => {
               </React.Fragment>
             )}
           />
-        </LocalizationProvider>
+        </LocalizationProvider> */}
         <div className="flex flex-col max-w-[200px] min-w-[600px]   rounded-xl  ">
           {/* <input
         <div className="absolute top-0 left-20 w-[130px]">
@@ -194,6 +195,7 @@ export const Reservation = () => {
         </div>
         <HeaderB />
       </div>
+      
       </Loading>
   
 
