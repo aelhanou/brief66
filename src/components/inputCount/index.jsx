@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
+
 
 export const InputCount = ({ setCount, status }) => {
   const [ChangeCount, setChangeCount] = useState(0);
@@ -51,4 +53,11 @@ export const InputCount = ({ setCount, status }) => {
       </div>
     </div>
   );
+};
+
+
+InputCount.propTypes = {
+  setCount:PropTypes.func,
+  status:PropTypes.string,
+ 
 };

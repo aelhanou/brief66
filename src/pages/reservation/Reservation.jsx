@@ -36,8 +36,8 @@ export const Reservation = () => {
   }, [value]);
 
   const getData = () => {
-    let debit = new Intl.DateTimeFormat("en-US").format(debitDate);
-    let fin = new Intl.DateTimeFormat("en-US").format(finDate);
+    let debit = new Intl.DateTimeFormat("en-GB").format(debitDate);
+    let fin = new Intl.DateTimeFormat("en-GB").format(finDate);
     const reservation = {
       debit,
       fin,
