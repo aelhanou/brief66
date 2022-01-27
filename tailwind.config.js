@@ -13,7 +13,23 @@ module.exports = {
       // => @media (min-width: 1024px) { ... }
 
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        // 'hero-pattern': "url(/images/background/couv-2.jpg)",
+        // 'footer-texture': "url(/../images/background/BackG1.jpg)",
+      },
+      colors: {
+        'regal-blue': 'rgb(15 23 42/.75)',
+        'border-nav' : 'rgb(248 250 252/.06)',
+        'white' : '#fff',
+      },
+      fontFamily: {
+        'sans': 'Glamatrix',
+        'serif': 'CormorantGaramond',
+        'display': 'Bellandha',
+        'anas': 'Arial',
+      },
+    },
   },
   plugins: [
     require('daisyui')

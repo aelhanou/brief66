@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // import { getAllChambres,addChambre } from './ChambreSlice'
 import { addReservation } from "./ReservationSlice";
 // import { DateRangePicker } from "react-date-range";
-import { InpC } from "../../components";
-import TextField from "@mui/material/TextField";
-import StaticDateRangePicker from "@mui/lab/StaticDateRangePicker";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import Box from "@mui/material/Box";
+import { InpC, HeaderB,Loading } from "../../components";
+// import TextField from "@mui/material/TextField";
+// import StaticDateRangePicker from "@mui/lab/StaticDateRangePicker";
+// import AdapterDateFns from "@mui/lab/AdapterDateFns";
+// import LocalizationProvider from "@mui/lab/LocalizationProvider";
+// import Box from "@mui/material/Box";
+// import { PropagateLoader } from 'react-spinners';
 // or @mui/lab/dateAdapter/{dayjs,luxon,moment} or any valid date-io adapter
 
 export const Reservation = () => {
+
   const state = useSelector((state) => state.reservation);
-  const [debitDate, setDebitDate] = useState();
-  const [finDate, setFinDate] = useState();
+  // const [debitDate, setDebitDate] = useState();
+  // const [finDate, setFinDate] = useState();
   const [adulte, setAdulte] = useState(0);
   const [enfant, setEnfant] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [value, setValue] = React.useState([null, null]);
+  // const [value, setValue] = React.useState([null, null]);
+  let logolabel = "images/logo/logo-white.svg";
+  let fleche = "images/CURVED_ARROW.png";
+  let winner = "images/badgewinner.png";
+
 
   // useEffect(() => {
   //   console.log("adulte", adulte);
@@ -30,10 +36,10 @@ export const Reservation = () => {
   //   console.log("enfant", enfant);
   // }, [enfant]);
 
-  useEffect(() => {
-    setDebitDate(value[0]);
-    setFinDate(value[1]);
-  }, [value]);
+  // useEffect(() => {
+  //   setDebitDate(value[0]);
+  //   setFinDate(value[1]);
+  // }, [value]);
 
   const getData = () => {
     let debit = new Intl.DateTimeFormat("en-GB").format(debitDate);
@@ -54,6 +60,8 @@ export const Reservation = () => {
     }
   };
 
+
+  
   // const getDt = (date) => {
   //   const { startDate, endDate } = date.selection;
   //   console.log(startDate);
@@ -63,11 +71,12 @@ export const Reservation = () => {
   // };
 
   return (
-    <>
+    
+    <Loading>
       <div
-        className="  w-full lg:items-center md:flex sm:flex-wrap sm:items-center md:flex-wrap md:gap-2 md:h-screen md:items-center  md:m-auto  h-screen flex gap-2 shadow-2xl justify-center  "
+        className="h-[100vh] w-full lg:items-top md:flex sm:flex-wrap sm:items-top md:flex-wrap md:h-screen md:items-top overflow-y-hidden  md:m-auto flex-col  h-screen flex gap-14 shadow-2xl justify-center bg-cover bg-center bg-no-repeat "
         style={{
-          backgroundImage: `url("/images/homeBackground.jpg")`,
+          backgroundImage: `url("/images/background/BackG1.jpg")`,
           backgroundSize: "cover",
         }}
       >
@@ -90,6 +99,58 @@ export const Reservation = () => {
         </LocalizationProvider>
         <div className="flex flex-col max-w-[200px] min-w-[600px]   rounded-xl  ">
           {/* <input
+        <div className="absolute top-0 left-20 w-[130px]">
+          <img src={winner} alt="" />
+        </div>
+        <div className='header  justify-center w-full flex gap-8 text-right p-2'>
+          {/* <div className='p-2 text-right'>
+                <h1 className='text-3xl text-white text-right font-serif'>La Mamounia<br />Palace in Marrakesh</h1>
+                <h1 className='text-7xl text-white text-right font-display mt-3'>La Mamounia</h1>
+                <p className='text-sm  gap-3 row text-right mt-3'>Timeless and wildly...
+                    <span className='text-Blue '>
+                        <a href="#" className='underline decoration-1 '>
+                            More Info 
+                            <i className="fas fa-user"></i>
+                        </a>
+                    </span>
+                    </p>
+            </div> */}
+          <img className='w-96 w-full flex justify-center' src={logolabel} alt="" />
+          {/* <div className='text-left'>
+            <h1 className='text-3xl text-white text-left font-serif'>La Mamounia<br />Palace in Marrakesh</h1>
+                <h1 className='text-7xl text-white text-left font-display mt-3'>La Mamounia</h1>
+                
+                <p className='text-sm  gap-3 row text-left mt-3'>Timeless and wildly...
+                    <span className='text-Blue '>
+                        <a href="#" className='underline decoration-1 '>
+                            More Info 
+                            <i className="fas fa-user"></i>
+                        </a>
+                    </span>
+                    </p>
+            </div> */}
+        </div>
+        <div className="Debu_Res flex flex-row justify-center">
+          {/* <LocalizationProvider className="md:mt-10 w-10" dateAdapter={AdapterDateFns}>
+            <StaticDateRangePicker
+              displayStaticWrapperAs={"desktop"}
+              value={value}
+              onChange={(newValue) => {
+                setValue(newValue);
+              }}
+              disablePast={true}
+              renderInput={(startProps, endProps) => (
+                <React.Fragment >
+                  <TextField  {...startProps} />
+                  <Box sx={{ mx: 2 }}> to </Box>
+                  <TextField {...endProps} />
+                </React.Fragment>
+              )}
+            />
+          </LocalizationProvider> */}
+          {/* <Modal /> */}
+          <div className="flex flex-col max-w-[100px] min-w-[500px]   rounded-xl  ">
+            {/* <input
             type="text"
             name="adulte"
             id=""
@@ -105,28 +166,36 @@ export const Reservation = () => {
             placeholder="Enter The Number Of Enfant"
             required
           /> */}
-          <div
-            className="w-full flex flex-col h-[38vh] justify-between  lg:mb-0 sm:mb-28  sm:max-w-[100%] rounded  "
-            style={{
-              padding: "10px 20px",
-              borderRadius: "15px",
-              backgroundColor: "#ffffffeb",
-            }}
-          >
-            <div className="flex  w-full h-72 rounded-xl   justify-between ">
-              <InpC setCount={setAdulte} status="Enter The Number Of Adulte" />
-              <InpC setCount={setEnfant} status="Enter The Number Of Childs" />
+            <div className="flex flex-col absolute top-[600px] right-[550px] opacity-70 font-anas">
+              <img className="w-[100px]" src={fleche} alt="" />
+              <p className="text-[12px] mt-5">this form for reserved your room...</p>
             </div>
-
-            <button
-              className="text-blue-400 btn glass h-10  mb-3 rounded "
-              onClick={() => getData()}
+            <div
+              className="w-full flex flex-col h-[20vh] justify-between  lg:mb-0 sm:mb-28  sm:max-w-[100%] rounded "
+              style={{
+                padding: "10px 20px",
+                borderRadius: "15px",
+                backgroundColor: "#ffffffeb",
+              }}
             >
-              Check Avilaible Rooms
-            </button>
+              <div className="flex  w-full h-42 rounded-xl   justify-between font-anas">
+                <InpC setCount={setAdulte} status="Enter The Number Of Adulte" />
+                <InpC setCount={setEnfant} status="Enter The Number Of Childs" />
+              </div>
+
+              <button
+                className="text-blue-400 btn glass h-10 text-sm  mb-3 rounded font-anas text-normale"
+                onClick={() => getData()}
+              >
+                Check Avilaible Rooms
+              </button>
+            </div>
           </div>
         </div>
+        <HeaderB />
       </div>
-    </>
+      </Loading>
+  
+
   );
 };
