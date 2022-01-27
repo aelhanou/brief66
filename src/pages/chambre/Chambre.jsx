@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllChambres } from "./ChambreSlice";
+import { getReservationData } from "../reservation/ReservationSlice";
 import { ChambreCard } from "../../components";
 
 export const Chambre = () => {
@@ -12,7 +13,7 @@ export const Chambre = () => {
   const [enfant, setEnfant] = useState();
   const [allChambres, setAllChambres] = useState([]);
   // const memoizedValue = useMemo()
-
+  const dispatch = useDispatch();
 
   let images = [
     "/images/room1.jpg",
@@ -40,20 +41,39 @@ export const Chambre = () => {
     setAdulte(adulte);
     setEnfant(enfant);
   }, [stateRev]);
-  const dispatch = useDispatch();
+
+  useEffect(async () => {
+    dispatch(getReservationData());
+  }, []);                                                                           
 
   useEffect(() => {
     setAllChambres(state.allChambares);
-    reservations(allChambres);
-  }, [state]);
+    console.log(allChambres);
+  }, [state]);                                                                                          
 
-  const reservations = (data) => {
-    if (data.length > 0) {
-      console.log(data);
-      data?.map((e) => {
-        console.log(e);
+  const reservations = (e) => {
+    if (e.length > 0) {
+      let reserved = e?.map((f) => {
+        let datedebit = f?.dateDeDebit.split("T");
+        let datefin = f?.dateDeFin.split("T");
+        let lastDatedebitFromDB = datedebit[0].split("-").join("/");
+        let lastDatefinFromDB = datefin[0].split("-").join("/");
+        let newDateDebitFront = debitDate.split("/").reverse().join("/");
+        let newDateFinFront = finDate.split("/").reverse().join("/");
+        if (
+          (newDateDebitFront <= lastDatedebitFromDB &&
+            newDateFinFront >= lastDatefinFromDB) ||
+          (newDateDebitFront >= lastDatedebitFromDB &&
+            newDateFinFront <= lastDatefinFromDB)
+        ) {
+          return true;
+        } else {
+          return false;
+        }
       });
+      return reserved.some((e) => e != false);
     }
+    return false;
   };
   // const getstate = () => {
   //   dispatch(
@@ -68,6 +88,8 @@ export const Chambre = () => {
   useEffect(async () => {
     dispatch(getAllChambres());
   }, []);
+
+
 
   // useEffect(()=>{
   //     console.log(stateRev.reservation);
@@ -86,8 +108,11 @@ export const Chambre = () => {
               img={images[i]}
               description={description[i]}
               key={e?._id}
+              Id={e?._id}
               nomdechambre={e?.nomDeCHambre}
               prixDeChambre={e?.prixDeChambre}
+              disable={reservations(e?.id_Reservations)}
+             
             />
           ))}
         </div>

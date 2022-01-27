@@ -34,6 +34,7 @@ export const ChambreSlice = createSlice({
       state.allChambares = payload;
     },
     [addChambre.fulfilled]: (state, { payload }) => {
+
       state.allChambares.push(payload);
     },
   },

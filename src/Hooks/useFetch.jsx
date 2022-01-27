@@ -3,6 +3,7 @@ export const useFetch = {
         let url = `${process.env.REACT_APP_BACKEND_URL}/${EndPoint}`
         const response = await fetch(url, {
             method: "GET",
+            credentials: "include",
             headers: {
                 "accept": "application/json",
                 // "Authorization": `Bearer ${token}`
@@ -15,6 +16,7 @@ export const useFetch = {
         let url = `${process.env.REACT_APP_BACKEND_URL}/${EndPoint}`
         return await fetch(url, {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
                 // "Authorization": `Bearer ${token}`
