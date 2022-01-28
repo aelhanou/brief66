@@ -1,25 +1,33 @@
-import React from "react";
-import PropTypes from 'prop-types';
-
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addReservation } from "../../pages/reservation/ReservationSlice";
 
 export const ChambreCard = ({
-  id,
+  Id,
   img,
   description,
   nomdechambre,
   prixDeChambre,
   disable,
-  yo
 }) => {
-  // if (disable == true) {
-  //   console.log("true");
-  // } else {
-  //   console.log("false");
-  // }
+  const state = useSelector((state) => state.reservation);
+  const [reservation, setReservaion] = useState({});
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  console.log(yo);
+  useEffect(() => {
+    setReservaion(state.reservationState);
+  }, [state, reservation]);
+
+  const getIdChambre = (id) => {
+    let reservationData = { ...reservation, idChambre: id };
+    dispatch(addReservation(reservationData));
+    navigate("/reservationinfo");
+  };
   return (
-    <div key={id}>
+    <div key={Id}>
       <div className="flex items-center bg-black w-full px-4 py-10 bg-cover card ">
         <div className="card glass lg:card-side text-neutral-content">
           <figure className="p-6">
@@ -44,7 +52,8 @@ export const ChambreCard = ({
             <div className="card-actions">
               <button
                 className="btn glass  rounded-full"
-                disabled={disable && true }
+                disabled={disable && true}
+                onClick={() => getIdChambre(Id)}
               >
                 Reservation
               </button>
@@ -52,18 +61,16 @@ export const ChambreCard = ({
           </div>
         </div>
       </div>
+     
     </div>
   );
 };
 
-
-
 ChambreCard.propTypes = {
-  id:PropTypes.string,
-  img:PropTypes.string,
-  description:PropTypes.string,
-  nomdechambre:PropTypes.string,
-  prixDeChambre:PropTypes.string,
-  disable:PropTypes.bool,
-  yo: PropTypes.bool
+  Id: PropTypes.string,
+  img: PropTypes.string,
+  description: PropTypes.string,
+  nomdechambre: PropTypes.string,
+  prixDeChambre: PropTypes.string,
+  disable: PropTypes.bool,
 };

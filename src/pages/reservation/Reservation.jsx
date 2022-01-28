@@ -4,29 +4,29 @@ import { useSelector, useDispatch } from "react-redux";
 // import { getAllChambres,addChambre } from './ChambreSlice'
 import { addReservation } from "./ReservationSlice";
 // import { DateRangePicker } from "react-date-range";
-import { InpC, HeaderB,Loading } from "../../components"; 
 // import TextField from "@mui/material/TextField";
 // import StaticDateRangePicker from "@mui/lab/StaticDateRangePicker";
 // import AdapterDateFns from "@mui/lab/AdapterDateFns";
 // import LocalizationProvider from "@mui/lab/LocalizationProvider";
 // import Box from "@mui/material/Box";
+import { InpC, HeaderB, Loading, Modal } from "../../components";
+
 // import { PropagateLoader } from 'react-spinners';
 // or @mui/lab/dateAdapter/{dayjs,luxon,moment} or any valid date-io adapter
 
 export const Reservation = () => {
-
   const state = useSelector((state) => state.reservation);
-  // const [debitDate, setDebitDate] = useState();
-  // const [finDate, setFinDate] = useState();
+  const [debitDate, setDebitDate] = useState();
+  const [finDate, setFinDate] = useState();
   const [adulte, setAdulte] = useState(0);
   const [enfant, setEnfant] = useState(0);
+  // const [displayCal,setDisplayCal] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // const [value, setValue] = React.useState([null, null]);
   let logolabel = "images/logo/logo-white.svg";
   let fleche = "images/CURVED_ARROW.png";
   let winner = "images/badgewinner.png";
-
 
   // useEffect(() => {
   //   console.log("adulte", adulte);
@@ -41,14 +41,14 @@ export const Reservation = () => {
   //   setFinDate(value[1]);
   // }, [value]);
 
-  function getData() {
-    let debit = new Intl.DateTimeFormat("en-GB").format("");
-    let fin = new Intl.DateTimeFormat("en-GB").format("");
+  const getData = () => {
+    let debit = new Intl.DateTimeFormat("en-GB").format(debitDate);
+    let fin = new Intl.DateTimeFormat("en-GB").format(finDate);
     const reservation = {
       debit,
       fin,
       adulte,
-      enfant
+      enfant,
     };
     // && adulte && enfant
     console.log(state);
@@ -60,8 +60,6 @@ export const Reservation = () => {
     }
   }
 
-
-  
   // const getDt = (date) => {
   //   const { startDate, endDate } = date.selection;
   //   console.log(startDate);
@@ -71,14 +69,13 @@ export const Reservation = () => {
   // };
 
   return (
-    
     <Loading>
-
       <div
         className="overflow-y-hidden w-full lg:items-top md:flex sm:flex-wrap sm:items-top md:flex-wrap md:h-screen md:items-top md:m-auto flex-col  h-screen flex gap-14 shadow-2xl justify-center bg-cover bg-center bg-no-repeat "
         style={{
           backgroundImage: `url("/images/background/BackG1.jpg")`,
           backgroundSize: "cover",
+          overflow: "hidden"
         }}
       >
         {/* <LocalizationProvider className="md:mt-20"  dateAdapter={AdapterDateFns}>
@@ -132,24 +129,6 @@ export const Reservation = () => {
             </div> */}
         </div>
         <div className="Debu_Res flex flex-row justify-center">
-          {/* <LocalizationProvider className="md:mt-10 w-10" dateAdapter={AdapterDateFns}>
-            <StaticDateRangePicker
-              displayStaticWrapperAs={"desktop"}
-              value={value}
-              onChange={(newValue) => {
-                setValue(newValue);
-              }}
-              disablePast={true}
-              renderInput={(startProps, endProps) => (
-                <React.Fragment >
-                  <TextField  {...startProps} />
-                  <Box sx={{ mx: 2 }}> to </Box>
-                  <TextField {...endProps} />
-                </React.Fragment>
-              )}
-            />
-          </LocalizationProvider> */}
-          {/* <Modal /> */}
           <div className="flex flex-col max-w-[100px] min-w-[500px]   rounded-xl  ">
             {/* <input
             type="text"
@@ -169,7 +148,9 @@ export const Reservation = () => {
           /> */}
             <div className="flex flex-col absolute top-[600px] right-[550px] opacity-70 font-anas">
               <img className="w-[100px]" src={fleche} alt="" />
-              <p className="text-[12px] mt-5">this form for reserved your room...</p>
+              <p className="text-[12px] mt-5">
+                this form for reserved your room...
+              </p>
             </div>
             <div
               className="w-full flex flex-col h-[20vh] justify-between  lg:mb-0 sm:mb-28  sm:max-w-[100%] rounded "
@@ -180,24 +161,29 @@ export const Reservation = () => {
               }}
             >
               <div className="flex  w-full h-42 rounded-xl   justify-between font-anas">
-                <InpC setCount={setAdulte} status="Enter The Number Of Adulte" />
-                <InpC setCount={setEnfant} status="Enter The Number Of Childs" />
+                <InpC
+                  setCount={setAdulte}
+                  status="Enter The Number Of Adulte"
+                />
+                <InpC
+                  setCount={setEnfant}
+                  status="Enter The Number Of Childs"
+                />
               </div>
 
-              <button
-                className="text-blue-400 btn glass h-10 text-sm  mb-3 rounded font-anas text-normale"
-                onClick={() => getData()}
-              >
-                Check Avilaible Rooms
+              <button className="text-blue-400 btn glass h-10 text-sm  mb-3 rounded font-anas text-normale">
+                <Modal
+                  name="Check Avilaible Rooms"
+                  setDebitDate={setDebitDate}
+                  setFinDate={setFinDate}
+                  getData={getData}
+                />
               </button>
             </div>
           </div>
         </div>
         <HeaderB />
       </div>
-      
-      </Loading>
-  
-
+    </Loading>
   );
 };
