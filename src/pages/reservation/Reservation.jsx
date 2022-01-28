@@ -4,6 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 // import { getAllChambres,addChambre } from './ChambreSlice'
 import { addReservation } from "./ReservationSlice";
 // import { DateRangePicker } from "react-date-range";
+// import TextField from "@mui/material/TextField";
+// import StaticDateRangePicker from "@mui/lab/StaticDateRangePicker";
+// import AdapterDateFns from "@mui/lab/AdapterDateFns";
+// import LocalizationProvider from "@mui/lab/LocalizationProvider";
+// import Box from "@mui/material/Box";
 import { InpC, HeaderB, Loading, Modal } from "../../components";
 
 // import { PropagateLoader } from 'react-spinners';
@@ -21,7 +26,7 @@ export const Reservation = () => {
   // const [value, setValue] = React.useState([null, null]);
   let logolabel = "images/logo/logo-white.svg";
   let fleche = "images/CURVED_ARROW.png";
-  // let winner = "images/badgewinner.png";
+  let winner = "images/badgewinner.png";
 
   // useEffect(() => {
   //   console.log("adulte", adulte);
@@ -53,7 +58,7 @@ export const Reservation = () => {
     } else {
       alert("il faut de remplir les champs");
     }
-  };
+  }
 
   // const getDt = (date) => {
   //   const { startDate, endDate } = date.selection;
@@ -66,7 +71,7 @@ export const Reservation = () => {
   return (
     <Loading>
       <div
-        className=" w-full lg:items-top md:flex sm:flex-wrap sm:items-top md:flex-wrap md:h-screen md:items-top overflow-y-hidden  md:m-auto flex-col  h-screen flex gap-14 shadow-2xl justify-center bg-cover bg-center bg-no-repeat "
+        className="overflow-y-hidden w-full lg:items-top md:flex sm:flex-wrap sm:items-top md:flex-wrap md:h-screen md:items-top md:m-auto flex-col  h-screen flex gap-14 shadow-2xl justify-center bg-cover bg-center bg-no-repeat "
         style={{
           backgroundImage: `url("/images/background/BackG1.jpg")`,
           backgroundSize: "cover",
@@ -90,11 +95,11 @@ export const Reservation = () => {
             )}
           />
         </LocalizationProvider> */}
-        <div className="flex flex-col max-w-[200px] min-w-[600px]   rounded-xl  ">
+        <div className="flex flex-col  min-w-[600px]   rounded-xl  ">
+          <div className="absolute top-0 left-20 w-[130px]">
+            <img src={winner} alt="" />
+          </div>
           {/* <input
-        <div className="absolute top-0 left-20 w-[130px]">
-          <img src={winner} alt="" />
-        </div>
         <div className='header  justify-center w-full flex gap-8 text-right p-2'>
           {/* <div className='p-2 text-right'>
                 <h1 className='text-3xl text-white text-right font-serif'>La Mamounia<br />Palace in Marrakesh</h1>
@@ -108,7 +113,7 @@ export const Reservation = () => {
                     </span>
                     </p>
             </div> */}
-          <img className=" w-full flex justify-center" src={logolabel} alt="" />
+          <img className='w-96 flex justify-center mx-auto my-0' src={logolabel} alt="" />
           {/* <div className='text-left'>
             <h1 className='text-3xl text-white text-left font-serif'>La Mamounia<br />Palace in Marrakesh</h1>
                 <h1 className='text-7xl text-white text-left font-display mt-3'>La Mamounia</h1>

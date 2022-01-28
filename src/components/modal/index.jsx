@@ -53,8 +53,8 @@ export const Modal = ({ name, getData, setDebitDate, setFinDate }) => {
   }, [value]);
 
   return (
-    <div>
-      <button type="button" onClick={handleOpen}>
+    <div  className="w-full ">
+      <button  className="w-full " type="button" onClick={handleOpen}>
         {name}
       </button>
       <StyledModal
@@ -64,7 +64,7 @@ export const Modal = ({ name, getData, setDebitDate, setFinDate }) => {
         onClose={handleClose}
         BackdropComponent={Backdrop}
       >
-        <Box sx={style} className="text-black " style={{ width: "52%" }}>
+        <Box sx={style} className="text-black " style={{ width: "36%" }}>
           <LocalizationProvider
             className="md:mt-10  "
             dateAdapter={AdapterDateFns}

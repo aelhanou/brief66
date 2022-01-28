@@ -61,6 +61,7 @@ export const ChambreCard = ({
           </div>
         </div>
       </div>
+     
     </div>
   );
 };
