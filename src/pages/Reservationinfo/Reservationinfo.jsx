@@ -1,12 +1,30 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getReservationData } from "../reservation/ReservationSlice";
 
 export const ReservationInfo = () => {
+  const stateRev = useSelector((state) => state.reservation);
+  const [valueReservation,setValueReservation] = useState()
+  // const [form,setForm] = useState({})
+  const dispatch = useDispatch();
+
+  useEffect(async () => {
+    dispatch(getReservationData());
+  }, []);
+
+  useEffect(()=>{ 
+    setValueReservation(stateRev.reservationState)
+    console.log(valueReservation);
+  },[stateRev])
+
+
+   
+   
   return (
     <>
       <div
         className="w-full h-screen flex justify-center items-center mt-8 text-white"
-        style={{overflow: "hidden"}}
+        style={{ overflow: "hidden" }}
       >
         <div className="w-[76%] h-screen flex justify-center ">
           <form className="w-full max-w-lg">
