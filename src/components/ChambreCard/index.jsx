@@ -13,18 +13,20 @@ export const ChambreCard = ({
   disable,
 }) => {
   const state = useSelector((state) => state.reservation);
-  const [reservation, setReservaion] = useState({});
+  const [reservation, setReservaion] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   useEffect(() => {
     setReservaion(state.reservationState);
   }, [state, reservation]);
 
   const getIdChambre = (id) => {
-    let reservationData = { ...reservation, idChambre: id };
-    dispatch(addReservation(reservationData));
-    navigate("/reservationinfo");
+    if (id) {
+      console.log(id);
+      let reservationData = { ...reservation, idChambre: id };
+      dispatch(addReservation(reservationData));
+      navigate("/reservationinfo");
+    }
   };
   return (
     <div key={Id}>
@@ -61,7 +63,6 @@ export const ChambreCard = ({
           </div>
         </div>
       </div>
-     
     </div>
   );
 };

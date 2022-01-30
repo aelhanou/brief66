@@ -1,186 +1,292 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getReservationData } from "../reservation/ReservationSlice";
+import { Formik } from "formik";
+import Alert from "@mui/material/Alert";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import { Reservation } from "./ReservationinfoSlice";
+
+const exportPdf = () => {
+  html2canvas(document.querySelector(".yo")).then((canvas) => {
+    document.body.appendChild(canvas);
+    // console.log(canvas); // if you want see your screenshot in body.
+    const imgData = canvas.toDataURL("image/PNG");
+    const pdf = new jsPDF();
+    pdf.addImage(imgData, "PNG", 40, 50);
+    pdf.save("hotelMamouniaReservation.pdf");
+    document.querySelector("canvas").remove();
+  });
+};
 
 export const ReservationInfo = () => {
   const stateRev = useSelector((state) => state.reservation);
-  const [valueReservation,setValueReservation] = useState()
-  // const [form,setForm] = useState({})
+  const [debitDate, setDebitDate] = useState();
+  const [finDate, setFInDate] = useState();
+  const [adulte, setAdulte] = useState();
+  const [enfant, setEnfant] = useState();
   const dispatch = useDispatch();
 
   useEffect(async () => {
     dispatch(getReservationData());
   }, []);
 
-  useEffect(()=>{ 
-    setValueReservation(stateRev.reservationState)
-    console.log(valueReservation);
-  },[stateRev])
+  useEffect(() => {
+    let { debit, fin, adulte, enfant } = stateRev.reservationState;
+    setDebitDate(debit);
+    setFInDate(fin);
+    setAdulte(adulte);
+    setEnfant(enfant);
+  }, [stateRev]);
 
+  let logolabel = "images/logo/favicon.png";
+  const getDataForm = (dataU) => {
+    let dataUser = { ...dataU, country: "maroc" };
+    let { debit, fin, adulte, enfant, idChambre, idUser } =
+      stateRev.reservationState;
+    // const data = {
+    //     "nbrDeAdulte": "2",
+    //     "nbrDeEnfant": "1",
+    //     "dateDeDebit": new Date,
+    //     "dateDeFin": new Date,
+    //     "idUser": "",
+    //     "idChambre": "61dac0e28f5e580f90fccaf9",
+    // }
+    let Data = {
+      dataUser,
+      data: {
+        nbrDeAdulte: adulte,
+        nbrDeEnfant: enfant,
+        idChambre,
+        idUser,
+        dateDeDebit: new Date(
+          debit.split("/").reverse().join("-")
+        ).toISOString(),
+        dateDeFin: new Date(fin.split("/").reverse().join("-")).toISOString(),
+      },
+    };
+    console.log(Data);
+    dispatch(Reservation(Data));
+    exportPdf();
+  };
 
-   
-   
   return (
     <>
-      <div
-        className="w-full h-screen flex justify-center items-center mt-8 text-white"
-        style={{ overflow: "hidden" }}
-      >
-        <div className="w-[76%] h-screen flex justify-center ">
-          <form className="w-full max-w-lg">
-            <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label
-                  className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
-                  htmlFor="grid-first-name"
-                >
-                  First Name
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                  id="grid-first-name"
-                  type="text"
-                  placeholder="Jane"
-                />
-              </div>
-              <div className="w-full md:w-1/2 px-3">
-                <label
-                  className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
-                  htmlFor="grid-last-name"
-                >
-                  Last Name
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-last-name"
-                  type="text"
-                  placeholder="Doe"
-                />
-              </div>
-            </div>
-            <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full px-3">
-                <label
-                  className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  email
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-password"
-                  type="email"
-                  placeholder="Email"
-                />
-                {/* <p className="text-gray-600 text-xs italic">
-              Make it as long and as crazy as you like
-            </p> */}
-              </div>
-            </div>
-            <div className="flex flex-wrap -mx-3 mb-2">
-              <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label
-                  className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
-                  htmlFor="grid-city"
-                >
-                  tel
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-city"
-                  type="text"
-                  placeholder="Phone"
-                />
-              </div>
-              <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label
-                  className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
-                  htmlFor="grid-state"
-                >
-                  country
-                </label>
-                <div className="relative">
-                  <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="grid-state"
-                  >
-                    <option>New Mexico</option>
-                    <option>Missouri</option>
-                    <option>Texas</option>
-                    <option>Maroc</option>
-                    <option>United States</option>
-                  </select>
-                  {/* <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg
-                  className="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
-              </div> */}
-                </div>
-              </div>
-              <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label
-                  className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
-                  htmlFor="grid-zip"
-                >
-                  Expired Carte
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-zip"
-                  type="text"
-                  placeholder="12/22"
-                />
-              </div>
-            </div>
-            <div className="flex mt-6 w-full">
-              <div className="w-full ">
-                <label
-                  className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  Carte Number
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-password"
-                  type="text"
-                  placeholder="121942049751244"
-                />
-                {/* <p className="text-gray-600 text-xs italic">
-              Make it as long and as crazy as you like
-            </p> */}
-              </div>
-            </div>
-            <div>
-              <button
-                className="flex-shrink-0 mt-6 border-transparent w-full bg-white border-4 text-blue-600 hover:text-teal-800 text-sm py-1 px-2 rounded"
-                type="button"
+      <div className="flex w-full h-screen bg-gray-600 text-white overflow-hidden gap-2">
+        <div className="w-[70%] h-screen flex flex-col justify-center items-center ">
+          <Formik
+            initialValues={{ email: "" }}
+            validate={(values) => {
+              const errors = {};
+              if (!values.email) {
+                errors.email = "Required";
+              } else if (
+                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+              ) {
+                errors.email = "Invalid email address";
+              }
+              if (!values.prenom) {
+                errors.prenom = "first Name Required";
+              } else if (!/^[a-zA-Z ]+$/i.test(values.prenom)) {
+                errors.prenom = "Invalid First Name address";
+              }
+              if (!values.nom) {
+                errors.nom = "last Name Required";
+              } else if (!/^[a-zA-Z ]+$/i.test(values.nom)) {
+                errors.nom = "Invalid First Name address";
+              }
+
+              if (!values.tel) {
+                errors.tel = "tel is Required";
+              } else if (
+                !/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s/0-9]*$/g.test(values.tel)
+              ) {
+                errors.tel = "Invalid First Name address";
+              }
+              if (!values.expireCarte) {
+                errors.expireCarte = "Expired Carte is Required";
+              }
+              if (!values.nbrDeLaCarte) {
+                errors.nbrDeLaCarte = "Carte Number is Required";
+              }
+
+              return errors;
+            }}
+            onSubmit={(values) => getDataForm(values)}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              /* and other goodies */
+            }) => (
+              <form
+                className="flex w-[90%] flex-col gap-2"
+                onSubmit={handleSubmit}
               >
-                Submit
-              </button>
-            </div>
-          </form>
+                <div className="flex gap-2">
+                  <div className="flex flex-col gap-1 w-full">
+                    <input
+                      className="shadow appearance-none border rounded w-full py-4 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      placeholder="First Name"
+                      type="text"
+                      name="prenom"
+                      onBlur={handleBlur}
+                      value={values.prenom}
+                      onChange={handleChange}
+                    />
+
+                    {errors.prenom && touched.prenom && errors.prenom}
+                  </div>
+                  <div className="flex flex-col gap-1 w-full">
+                    <input
+                      className="shadow appearance-none border rounded w-full py-4 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      placeholder="Last Name"
+                      type="text"
+                      name="nom"
+                      onBlur={handleBlur}
+                      value={values.nom}
+                      onChange={handleChange}
+                    />
+
+                    {errors.nom && touched.nom && errors.nom}
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1 w-full">
+                  <input
+                    className="shadow appearance-none border rounded w-full py-4 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="Email"
+                    type="email"
+                    name="email"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                  />
+
+                  {errors.email && touched.email && errors.email}
+                </div>
+
+                <div className="flex flex-col gap-1 w-full">
+                  <input
+                    className="shadow appearance-none border rounded w-full py-4 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="tel"
+                    type="text"
+                    name="tel"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.tel}
+                  />
+                  {errors.tel && touched.tel && errors.tel}
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex flex-col gap-1 w-full">
+                    <input
+                      className="shadow appearance-none border rounded w-full py-4 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      placeholder="Expired Carte"
+                      type="text"
+                      name="expireCarte"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.expireCarte}
+                    />
+                    {errors.expireCarte &&
+                      touched.expireCarte &&
+                      errors.expireCarte}
+                  </div>
+                  <div className="flex flex-col gap-1 w-full">
+                    <input
+                      className="shadow appearance-none border rounded w-full py-4 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      placeholder="Carte Number"
+                      type="text"
+                      name="nbrDeLaCarte"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.nbrDeLaCarte}
+                    />
+                    {errors.nbrDeLaCarte &&
+                      touched.nbrDeLaCarte &&
+                      errors.nbrDeLaCarte}
+                  </div>
+                </div>
+                <button
+                  className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </form>
+            )}
+          </Formik>
         </div>
-        <div className="w-[22%] h-screen">
-          <div className="flex flex-col gap-8  mt-10 rounded-xl w-full p-4 h-[280px] border-2">
-            <div>Votre séjour</div>
-            <div className="flex justify-between ">
-              <div className="flex flex-col">
-                <div>Arrivée Après</div>
-                <div>le 23/02/2022</div>
-              </div>
-              <div className="flex flex-col">
-                <div>Départ Avant</div>
-                <div>le 23/05/2022</div>
+        <div className=" yo flex flex-col gap-8 fixed right-[60px] top-[50px] bg-white  drop-shadow-xl text-black  mt-10 rounded-sm  w-[25%] px-4 py-8 h-auto backdrop-blur-sm">
+          <div className="w-full header_card">
+            <img className="pt-[5%] px-[35%]" src={logolabel} alt="" />
+          </div>
+          <div className="text-center text-xl font-semibold">
+            Complete your Stay
+          </div>
+          <div className="flex justify-between bg-white drop-shadow-xl p-5 rounded-xl flex-col">
+            <div className="flex flex-col">
+              <div className="overflow-x-auto max-w-full text-center justify-center">
+                <table className="table w-full">
+                  <thead>
+                    <tr>
+                      <th className="bg-gray-100">First Name</th>
+                      <th className="bg-gray-100">Last Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="bg-white">yo </td>
+                      <td className="bg-white">ggg</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table className="table w-full">
+                  <thead>
+                    <tr>
+                      <th className="bg-gray-100">Check-in</th>
+                      <th className="bg-gray-100">Check-out</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="bg-white">{debitDate && debitDate}</td>
+                      <td className="bg-white">{finDate && finDate}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table className="table w-full">
+                  <thead>
+                    <tr>
+                      <th className="bg-gray-100">Adults</th>
+                      <th className="bg-gray-100">Children</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="bg-white ">{adulte && adulte}</td>
+                      <td className="bg-white ">{enfant && enfant}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table className="table w-full ">
+                  <thead>
+                    <tr>
+                      <th className="bg-white ">Price :</th>
+                      <td className="bg-white">0,00 MAD</td>
+                    </tr>
+                  </thead>
+                </table>
               </div>
             </div>
-            <div>2 adulte And 5 enfant</div>
-            <div>Total : 500,00 MAD</div>
           </div>
+          <Alert severity="warning">
+            This is a warning alert — check it out!
+          </Alert>
         </div>
       </div>
     </>

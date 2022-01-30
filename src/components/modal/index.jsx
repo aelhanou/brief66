@@ -64,7 +64,7 @@ export const Modal = ({ name, getData, setDebitDate, setFinDate }) => {
         onClose={handleClose}
         BackdropComponent={Backdrop}
       >
-        <Box sx={style} className="text-black " style={{ width: "36%" }}>
+        <Box sx={style} className="text-black " style={{ width: "700px" }}>
           <LocalizationProvider
             className="md:mt-10  "
             dateAdapter={AdapterDateFns}

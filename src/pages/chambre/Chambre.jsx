@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllChambres } from "./ChambreSlice";
 import { getReservationData } from "../reservation/ReservationSlice";
 import { ChambreCard } from "../../components";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 
 export const Chambre = () => {
   const state = useSelector((state) => state.chambre);
@@ -17,7 +17,6 @@ export const Chambre = () => {
   const dispatch = useDispatch();
   let winner = "images/badgewinner.png";
   let logolabel = "images/logo/favicon.png";
-
 
   let images = [
     "/images/room1.jpg",
@@ -72,6 +71,7 @@ export const Chambre = () => {
           (newDateDebitFront >= lastDatedebitFromDB &&
             newDateFinFront <= lastDatefinFromDB)
         ) {
+          console.log('yofff');
           return true;
         } else {
           return false;
@@ -171,7 +171,7 @@ export const Chambre = () => {
       opacity: 1;
     }
   }
-`
+`;
 
   // useEffect(()=>{
   //     console.log(stateRev.reservation);
@@ -186,7 +186,8 @@ export const Chambre = () => {
       <div className="top-0 left-20 w-[130px] fixed">
         <img src={winner} alt="" />
       </div>
-      <div className="w-full "
+      <div
+        className="w-full "
         style={{
           backgroundImage: `url("/images/background/BackG3.jpg")`,
           zIndex: "-10",
@@ -194,19 +195,23 @@ export const Chambre = () => {
           height: "100vh",
           minHeight: "500px",
           backgroundAttachment: "fixed",
-        }}>
-      </div>
-      <div className="w-full absolute h-[100vh] flex justify-center items-center top-0" style={{ zIndex: "10" }}>
-        <h2 className="flex text-6xl pb-20 justify-center items-center h-screen"> Réserve Your Room</h2>
+        }}
+      ></div>
+      <div
+        className="w-full absolute h-[100vh] flex justify-center items-center top-0"
+        style={{ zIndex: "10" }}
+      >
+        <h2 className="flex text-6xl pb-20 justify-center items-center h-screen">
+          {" "}
+          Réserve Your Room
+        </h2>
         <div>
           <div className="container absolute left-[50%] bottom-[10%] z-50 w-7 h-7">
             <div className="chevron"></div>
             <div className="chevron"></div>
             <div className="chevron"></div>
             <span className="text">Scroll down</span>
-            <style>
-              {css}
-            </style>
+            <style>{css}</style>
           </div>
         </div>
       </div>
@@ -217,10 +222,10 @@ export const Chambre = () => {
               img={images[i]}
               description={description[i]}
               key={e?._id}
+              Id={e?._id}
               nomdechambre={e?.nomDeCHambre}
               prixDeChambre={e?.prixDeChambre}
               disable={reservations(e?.id_Reservations)}
-              yo="asfa"
             />
           ))}
         </div>
@@ -229,7 +234,9 @@ export const Chambre = () => {
             <div className="w-full header_card">
               <img className="pt-[5%] px-[35%]" src={logolabel} alt="" />
             </div>
-            <div className="text-center text-xl font-semibold">Complete your Stay</div>
+            <div className="text-center text-xl font-semibold">
+              Complete your Stay
+            </div>
             <div className="flex justify-between bg-white drop-shadow-xl p-5 rounded-xl flex-col">
               <div className="flex flex-col">
                 <div className="overflow-x-auto max-w-full text-center justify-center">
@@ -268,35 +275,12 @@ export const Chambre = () => {
                 </div>
               </div>
             </div>
-            <Alert severity="warning">This is a warning alert — check it out!</Alert>
+            <Alert severity="warning">
+              This is a warning alert — check it out!
+            </Alert>
           </div>
         )}
       </div>
-        <div className="w-[100%] overflow-x-scroll">
-          <div className="w-[80%]  flex justify-center gap-6 items-center ">
-          <div className="w-[450px] h-[400px] bg-gray-50 text-black">
-            yo1
-          </div>
-          <div className="w-[450px] h-[400px] bg-gray-50 text-black">
-            yo2
-          </div>
-          <div className="w-[450px] h-[400px] bg-gray-50 text-black">
-            yo3
-          </div>
-          <div className="w-[450px] h-[400px] bg-gray-50 text-black">
-            yo4
-          </div>
-          <div className="w-[450px] h-[400px] bg-gray-50 text-black">
-            yo5
-          </div>
-          <div className="w-[450px] h-[400px] bg-gray-50 text-black">
-            yo6
-          </div>
-          <div className="w-[450px] h-[400px] bg-gray-50 text-black">
-            yo7
-          </div>
-          </div>
-        </div>
-    </div >
+    </div>
   );
 };

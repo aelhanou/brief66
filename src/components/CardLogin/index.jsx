@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export const CardLogin = () => {
 
-  const [token, setToken] = useState();
+  // const [token, setToken] = useState();
   
   return (
     <div className='wrapper p-[20px]'>
