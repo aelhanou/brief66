@@ -183,7 +183,7 @@ export const Chambre = () => {
 
   return (
     <div className="bg-black text-white font-anas">
-      <div className="top-0 left-20 w-[130px] fixed">
+      <div className="top-0 left-20 w-[130px] fixed z-[330]">
         <img src={winner} alt="" />
       </div>
       <div
@@ -215,8 +215,8 @@ export const Chambre = () => {
           </div>
         </div>
       </div>
-      <div className="flex w-full " style={{ zIndex: "100" }}>
-        <div className="w-[76%]">
+      <div className="flex w-full" style={{ zIndex: "100" }}>
+        <div className="w-[80%] grid grid-cols-4 gap-6 p-20">
           {state?.allChambares.map((e, i) => (
             <ChambreCard
               img={images[i]}
@@ -230,7 +230,7 @@ export const Chambre = () => {
           ))}
         </div>
         {state?.allChambares.length > 0 && (
-          <div className="flex flex-col gap-8 fixed right-[60px] top-[50px] bg-white  drop-shadow-xl text-black  mt-10 rounded-sm  w-[19%] px-4 py-8 h-auto backdrop-blur-sm">
+          <div className="flex flex-col gap-8 fixed right-[50px] top-[50px] bg-white  drop-shadow-xl text-black  mt-10 rounded-md  w-[19%] px-4 py-8 h-auto backdrop-blur-sm">
             <div className="w-full header_card">
               <img className="pt-[5%] px-[35%]" src={logolabel} alt="" />
             </div>

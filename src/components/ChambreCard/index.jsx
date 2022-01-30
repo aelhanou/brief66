@@ -30,13 +30,13 @@ export const ChambreCard = ({
   };
   return (
     <div key={Id}>
-      <div className="flex items-center bg-black w-full px-4 py-10 bg-cover card ">
-        <div className="card glass lg:card-side text-neutral-content">
-          <figure className="p-6">
+      <div className="flex items-center bg-black w-full bg-cover card rounded-md">
+        <div className="card glass w-full text-neutral-content">
+          <figure className="hover:blur-sm transition ease-in-out delay-150">
             <img
               src={img}
-              className="rounded-lg shadow-lg"
-              style={{ width: "350px", height: "250px" }}
+              className="rounded-lg shadow-lg w-full"
+              style={{ width: "500px", height: "350px" }}
             />
           </figure>
           <div className="max-w-md card-body">

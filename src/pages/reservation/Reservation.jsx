@@ -128,7 +128,7 @@ export const Reservation = () => {
                     </p>
             </div> */}
         </div>
-        <div className="Debu_Res flex flex-row justify-center">
+        <div className="Debu_Res flex flex-row justify-center pt-10">
           <div className="flex flex-col max-w-[100px] min-w-[500px]   rounded-xl  ">
             {/* <input
             type="text"
