@@ -36,6 +36,9 @@ export const ChambreCard = ({
               className="rounded-lg shadow-lg w-full"
               style={{ width: "500px", height: "350px" }}
             />
+            <h2 className="mt-4 flex justify-end text-2xl w-full">
+              {prixDeChambre}
+            </h2>
           </figure>
           <div className="max-w-md card-body">
             <h2 className="card-title ">{nomdechambre}</h2>
@@ -46,9 +49,7 @@ export const ChambreCard = ({
               rows="4"
               onChange={(e) => e.target.value}
             />
-            <h2 className="mt-4 flex justify-end text-2xl w-full">
-              {prixDeChambre}
-            </h2>
+            
             <div className="card-actions">
               <button
                 className="btn glass  rounded-full"

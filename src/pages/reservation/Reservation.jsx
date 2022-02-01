@@ -96,7 +96,7 @@ export const Reservation = () => {
           />
         </LocalizationProvider> */}
         <div className="flex flex-col  min-w-[600px]   rounded-xl  ">
-          <div className="absolute top-0 left-20 w-[130px]">
+          <div className="absolute top-0 left-20 w-[130px] z-[400]">
             <img src={winner} alt="" />
           </div>
           {/* <input
